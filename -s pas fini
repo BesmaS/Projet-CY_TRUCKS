@@ -1,0 +1,327 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define true 1
+#define false 0
+
+typedef struct _tree {
+  int data;
+  struct _tree* left;
+  struct _tree* right;
+  float mini;
+  float maxi;
+  float somme;
+  float diff;
+  float moy;
+  int N;
+  int eq;
+} Tree;
+
+
+
+Tree* createTree(int e, float d) {
+ Tree* arbre = malloc(sizeof(Tree));
+  if (arbre == NULL) {
+   exit(23);
+    }
+    else {
+    arbre->data = e;
+    arbre->left = NULL;
+    arbre->right = NULL;
+    arbre->mini = d;
+    arbre->maxi = d;
+    arbre->somme = d;
+    arbre->N = 1;
+    arbre->eq = 0;
+    arbre->diff = arbre->maxi - arbre->mini;
+    arbre->moy = d;
+   }
+     return arbre;
+}
+
+
+ void afficher_arbre(Tree* arbre, int* n) {
+  if (arbre != NULL) {
+  afficher_arbre(arbre->right, n);
+
+  if(*n > 0){
+  printf("(%02d)\n %f m\n %f m\n %f m\n %f m\n %f m\n %d\n", arbre->data, arbre->mini, arbre->maxi, arbre->somme, arbre->diff, arbre->moy, arbre->N);
+  *n = *n -1;
+  }
+
+   afficher_arbre(arbre->left, n);
+   }
+}
+
+
+int hauteur(Tree* arbre) {
+  if (arbre == NULL) {
+    return -1;
+  }
+  else {
+    int g = hauteur(arbre->left);
+    int d = hauteur(arbre->right);
+    if (g > d) {
+      return g + 1;
+    }
+    else {
+      return d + 1;
+    }
+  }
+}  
+
+
+int max(int a, int b, int c){
+  int ma = a;
+  if(b >=ma){
+  ma = b;
+  }
+  if(c >= ma){
+  ma = c;
+  }
+  return ma;
+}
+
+
+
+int min(int a, int b, int c){
+  int mi = a;
+  if( b <= mi){
+  mi = b;
+  }
+  if( c <= mi){
+  mi = c;
+  }
+  return mi;
+}
+
+Tree* rotationDroite(Tree* a){
+  if(a == NULL){
+  exit(1);
+  }
+  Tree* pivot;
+  int ha, hp ;
+  pivot = a -> left;
+  a -> left = pivot -> right;
+  pivot -> right = a;
+  ha = a -> eq;
+  hp = pivot -> eq;
+  a->eq = ha - min(hp, 0,0) + 1;
+  pivot->eq = max( ha + 2, ha + hp + 2, hp + 1 );
+  a = pivot;
+  return a;
+}
+
+Tree* rotationGauche(Tree* a){
+  if(a == NULL){
+    exit(2);
+  }
+  Tree* pivot;
+  int hq, hp ;
+  pivot = a -> right;
+  a -> right = pivot -> left;
+  pivot -> left = a;
+  hq = a -> eq;
+  hp = pivot -> eq;
+  a->eq = hq - max(hp,0,0) - 1;
+  pivot->eq =  min(hq-2, hq + hp-2, hp-1 );
+  a = pivot;
+  return a;
+}
+
+Tree* rotationDroiteGauche(Tree* a){
+  a -> right = rotationDroite(a->right);
+  return rotationGauche(a);
+}
+
+Tree* rotationGaucheDroite(Tree* a){
+  a -> left = rotationGauche(a->left);
+  return rotationDroite(a);
+}
+
+Tree* equilibrer(Tree* a) {
+  if (a == NULL) {
+    return NULL;
+  }
+
+  if (a->eq >= 2) {
+    if (a->right->eq >= 0) {
+      return rotationGauche(a);
+    } 
+    else {
+      return rotationDroiteGauche(a);
+    }
+  } 
+  else if (a->eq <= -2) {
+    if (a->left->eq <= 0) {
+      return rotationDroite(a);
+    }
+    else {
+      return rotationGaucheDroite(a);
+    }
+  }
+
+  return a;
+}
+
+
+
+Tree* insertAvl(Tree* a, int e, int* h, float d) {
+  if (a == NULL) {
+    *h = 1;
+    return createTree(e, d);
+  } 
+  if (e < a->data) {
+    a->left = insertAvl(a->left, e, h, d);
+    if (*h != 0) {
+      a->eq--;
+      if (a->eq == 0) {
+        *h = 0;
+      }
+    }
+  } 
+  else if (e > a->data) {
+    a->right = insertAvl(a->right, e, h, d);
+    if (*h != 0) {
+      a->eq++;
+      if (a->eq == 0) {
+        *h = 0;
+      }
+    }
+  } else {
+    *h = 0;
+    a->somme += d;
+    a->N++;
+    if (d <= a->mini) {
+      a->mini = d;
+    } else {
+      a->maxi = d;
+    }
+    a->diff = a->maxi - a->mini;
+    a->moy = a->somme / a->N;
+    return a;
+  }
+  int ha = 1 + max(hauteur(a->left), hauteur(a->right), 0);
+  a->eq = hauteur(a->right) - hauteur(a->left);
+
+  return equilibrer(a);
+}
+
+Tree* insertAVL2(Tree* a, int e, int* h, float d){
+  if(a == NULL){
+    return createTree(e, d);
+    *h = 1;
+  }
+  if(d < a->diff){
+    a->left = insertAVL2(a->left, e, h, d);
+    *h = -*h;
+  }
+  else if(d > a->diff){
+    a->right = insertAVL2(a->right, e, h, d);
+  }
+  else{
+    *h = 0;
+    return a;
+  }
+  if(*h != 0){
+    a->eq += *h;
+    a = equilibrer(a);
+    if(a->eq == 0){
+      *h = 0;
+    }
+    else{
+      *h = 1;
+    }
+  }
+    return a;
+}
+
+
+void parcoursPrefixe(Tree* a){
+  if(a != NULL){
+  printf("(%02d)\n %f m\n %f m\n %f m\n %f m\n %d\n", a->data, a->mini, a->maxi, a->somme, a->diff, a->N);
+  parcoursPrefixe(a -> left);
+  parcoursPrefixe(a -> right);
+  }
+}
+
+Tree* rechercher(Tree* a, int e){
+  if(a == NULL){
+    exit(5);
+  }
+  if( e < a -> data){
+    return rechercher(a -> left, e);
+  }
+  else if( e > a -> data){
+    return rechercher(a -> right, e);
+  }
+  else{
+    return a;
+  }
+}
+
+
+
+Tree* copieAvl(Tree* a, Tree* b, int* h){
+  if(a != NULL){
+    b = insertAVL2(b, a->data, h, a->diff);
+    copieAvl(a->left, b, h);
+    copieAvl(a->right, b, h);
+  }
+  return b;
+}
+
+
+
+
+int main(void) {
+  int h = 0;
+  Tree* arbre = createTree(20, 10.2);
+  insertAvl(arbre, 95, &h, 27.1);
+  insertAvl(arbre, 10, &h, 48.6);
+  insertAvl(arbre, 19, &h, 3.3);
+  insertAvl(arbre, 8, &h, 42.8);
+  insertAvl(arbre, 102, &h, 34.1);
+  insertAvl(arbre, 102, &h, 54.9);
+  insertAvl(arbre, 11, &h, 73.8);
+  insertAvl(arbre, 11, &h, 83.8);
+  insertAvl(arbre, 11, &h, 23.8);
+  insertAvl(arbre, 11, &h, 100.2);
+  insertAvl(arbre, 12, &h, 82.8);
+  insertAvl(arbre, 102, &h, 60.9);
+  insertAvl(arbre, 102, &h, 84.9);
+  insertAvl(arbre, 102, &h, 4.9);
+  insertAvl(arbre, 102, &h, 94.9);
+  insertAvl(arbre, 10, &h, 87.6);
+  insertAvl(arbre, 10, &h, 37.6);
+  insertAvl(arbre, 10, &h, 49.6);
+  insertAvl(arbre, 107, &h, 62.9);
+  insertAvl(arbre, 93, &h, 63.9);
+  insertAvl(arbre, 118, &h, 60.9);
+  insertAvl(arbre, 85, &h, 60.9);
+  insertAvl(arbre, 93, &h, 60.9);
+
+  Tree* arbre2 = NULL;
+  arbre2 = copieAvl(arbre, arbre2, &h);
+  
+  
+  
+  
+  h = 12;
+  afficher_arbre(arbre2, &h);
+  
+  return 0;
+} 
+  
+  
+
+  
+
+
+
+
+
+
+
