@@ -3,11 +3,11 @@
 #include <string.h>
 
 typedef struct Trajet {
-    int id;             // Identifiant du trajet
-    float distance_min; // Distance minimale
-    float distance_max; // Distance maximale
-    float distance_sum; // Somme des distances
-    int usage_count;    // Nombre d'utilisations
+    int id;             
+    float distance_min; 
+    float distance_max; 
+    float distance_sum; 
+    int usage_count;    
     struct Trajet *left;
     struct Trajet *right;
 } Trajet;
@@ -177,11 +177,11 @@ void mettreAJourTrajet(Trajet *trajet, float distance) {
     trajet->usage_count++;
     trajet->distance_sum += distance;
 
-    if (distance < trajet->distance_min) {
+    if (distance <= trajet->distance_min) {
         trajet->distance_min = distance;
     }
 
-    if (distance > trajet->distance_max) {
+    if (distance >= trajet->distance_max) {
         trajet->distance_max = distance;
     }
 }
