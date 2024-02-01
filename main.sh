@@ -19,7 +19,7 @@ else
 fi
 
 
-while ! [["$choice" =~ ^[1-6]$]]; do
+while ! [["$choice" =~ ^[1-7]$]]; do
     echo "Choose a treatment option:"
     echo "1) Option -d1"
     echo "2) Option -d2"
@@ -38,11 +38,11 @@ while ! [["$choice" =~ ^[1-6]$]]; do
     fi
 
     case $choice in
-        1) treatment/d1.sh;;
-        2) treatment/d2.sh;;
-        3) treatment/l.sh;;
-        4) treatment/t;;
-        5) treatment/s;;
+        1) time treatment/d1.sh;;
+        2) time treatment/d2.sh;;
+        3) time treatment/l.sh;;
+        4) time treatment/t.sh;;
+        5) time treatment/s.sh;;
         6) cat help.txt;;
         7) echo "Exiting..."; break;;
     esac
