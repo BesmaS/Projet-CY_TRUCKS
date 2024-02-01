@@ -1,5 +1,7 @@
 #!/bin/bash
 
+chmod 777 data/data.csv
+
 LC_NUMERIC=C awk -F ";" '
 {
   current_driver = $6;
@@ -9,4 +11,6 @@ END {
   for (driver in total_d){
     printf "%s;%.6f\n" , driver , total_d[driver];
   }
-}' data.csv | LC_NUMERIC=C sort -t ";" -k2,2nr | head -n 10 > temp/result_d2.txt
+}' data/data.csv | LC_NUMERIC=C sort -t ";" -k2,2nr | head -n 10 > temp/result_d2.txt
+
+cat temp/result_d2.txt
