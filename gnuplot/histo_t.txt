@@ -1,0 +1,35 @@
+reset
+set terminal png size 700,800
+set output 'H_t.png'
+set yrange [0:3500]
+set mytics 2
+set style data histogram
+set style histogram cluster gap 1
+set datafile sep ";"
+set style fill solid
+set boxwidth 0.9
+set xtics format ""
+set grid ytics
+#Déplace le graphique en laissant une marge en bas qu'on définit:
+set lmargin at screen 0.2
+#Déplace le graphique en laissant une marge en bas qu'on définit:
+set bmargin at screen 0.15
+set tmargin at screen 0.90
+unset title
+unset grid
+set border lw 2
+#Création du texte "Option -t : Nb routes = f(Towns)" selon les coordonnées suivantes:
+set label 2 'Option -t : Nb routes = f(Towns)' at graph 0.5, 1.02 center
+#Création du "TOWN NAMES" selon les coordonnées suivantes:
+set label 1 'TOWN NAMES' at graph 0.4, -0.15 centre 
+#Création du texte "NB ROUTES" selon les coordonnées suivantes:
+set label 3 'NB ROUTES' at graph -0.2, 0.45 left rotate by 90
+#Pivote de 45° les abscisses(même chose que pour les ordonées donc juste les id):
+set xtic rotate by 45 scale 0.90
+#Déplace les id en changeant leur position:
+set xtics offset -3, graph -0.099
+set xtics font ",8"
+set ytics font ",15"
+set key font ",12"
+plot "data1.txt" using 2:xtic(1) title "Total routes" linecolor rgb "#cf0761", \
+     "data1.txt" using 3 title "First town" linecolor rgb "#6c344d"
