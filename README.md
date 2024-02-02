@@ -13,6 +13,7 @@ Programme de traitement de données
 
    
   chmod 777 main.sh
+  
 
 
 # Objectif réussis
@@ -27,9 +28,9 @@ Programme de traitement de données
     
 
 # Instructions
-Compilations
-Choisir les numéros
-Ouvrir les dossiers
+1- Compilations
+2- Choisir les numéros
+3- Ouvrir les dossiers
 
 
 # Fonctionnement du programme
