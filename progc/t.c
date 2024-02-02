@@ -17,21 +17,21 @@ Data Dix_Lignes[MAX_LIGNES];
 
 typedef struct avl {
     int element;
-    struct avl *pR;
-    struct avl *pL;
+    struct avl *fd;
+    struct avl *fg;
     int equilibre;
     char depart[50];
     int id_route;
 } Avl;
 
-Avl *createAvl(int e, char dep[50], int id_un) {
+Avl *creerAvl(int e, char dep[50], int id_un) {
     Avl *n = malloc(sizeof(Avl));
     if (n == NULL) {
         exit(1);
     }
     n->element = e;
-    n->pR = NULL;
-    n->pL = NULL;
+    n->fd = NULL;
+    n->fg = NULL;
     n->equilibre = 0;
     strcpy(n->depart, dep);
     n->id_route = id_un;
@@ -55,9 +55,9 @@ int min2(int a, int b, int c) {
 }
 
 Avl *rotationG(Avl *a) {
-    Avl *pivot = a->pR;
-    a->pR = pivot->pL;
-    pivot->pL = a;
+    Avl *pivot = a->fd;
+    a->fd = pivot->fg;
+    pivot->fg = a;
     int eq_a = a->equilibre;
     int eq_pivot = pivot->equilibre;
     a->equilibre = eq_a - max(eq_pivot, 0) - 1;
@@ -67,9 +67,9 @@ Avl *rotationG(Avl *a) {
 }
 
 Avl *rotationD(Avl *a) {
-    Avl *pivot = a->pL;
-    a->pL = pivot->pR;
-    pivot->pR = a;
+    Avl *pivot = a->fg;
+    a->fg = pivot->fd;
+    pivot->fd = a;
     int eq_a = a->equilibre;
     int eq_pivot = pivot->equilibre;
     a->equilibre = eq_a - min(eq_pivot, 0) + 1;
@@ -78,45 +78,45 @@ Avl *rotationD(Avl *a) {
     return a;
 }
 
-Avl *addpR(Avl *a, int e, char dep[50], int id_un) {
+Avl *ajouterFD(Avl *a, int e, char dep[50], int id_un) {
     if (a == NULL) {
-        return createAvl(e, dep, id_un);
+        return creerAvl(e, dep, id_un);
     }
-    if (a->pR == NULL) {
-        a->pR = createAvl(e, dep, id_un);
+    if (a->fd == NULL) {
+        a->fd = creerAvl(e, dep, id_un);
     }
     return a;
 }
 
-Avl *addpL(Avl *a, int e, char dep[50], int id_un) {
+Avl *ajouterFG(Avl *a, int e, char dep[50], int id_un) {
     if (a == NULL) {
-        return createAvl(e, dep, id_un);
+        return creerAvl(e, dep, id_un);
     }
-    if (a->pL == NULL) {
-        a->pL = createAvl(e, dep, id_un);
+    if (a->fg == NULL) {
+        a->fg = creerAvl(e, dep, id_un);
     }
     return a;
 }
 
 Avl *DoubleRG(Avl *a) {
-    a->pR = rotationD(a->pR);
+    a->fd = rotationD(a->fd);
     return rotationG(a);
 }
 
 Avl *DoubleRD(Avl *a) {
-    a->pL = rotationG(a->pL);
+    a->fg = rotationG(a->fg);
     return rotationD(a);
 }
 
 Avl *equilibreAVL(Avl *a) {
     if (a->equilibre >= 2) {
-        if (a->pR->equilibre >= 0) {
+        if (a->fd->equilibre >= 0) {
             return rotationG(a);
         } else {
             return DoubleRG(a);
         }
     } else if (a->equilibre <= -2) {
-        if (a->pL->equilibre <= 0) {
+        if (a->fg->equilibre <= 0) {
             return rotationD(a);
         } else {
             return DoubleRD(a);
@@ -127,7 +127,7 @@ Avl *equilibreAVL(Avl *a) {
 
 void parcoursDecroissantAvecInfos(Avl *a, Data *donnees_triees, int *i, int limite) {
     if (a != NULL && *i < limite) {
-        parcoursDecroissantAvecInfos(a->pR, donnees_triees, i, limite);
+        parcoursDecroissantAvecInfos(a->fd, donnees_triees, i, limite);
 
         if (*i < MAX_LIGNES) {
             donnees_triees[*i].id_etape = a->element;
@@ -150,19 +150,19 @@ void parcoursDecroissantAvecInfos(Avl *a, Data *donnees_triees, int *i, int limi
 
         (*i)++;
 
-        parcoursDecroissantAvecInfos(a->pL, donnees_triees, i, limite);
+        parcoursDecroissantAvecInfos(a->fg, donnees_triees, i, limite);
     }
 }
 
 Avl *insertionAVL(Avl *a, int e, char dep[50], int id_un, int *h) {
     if (a == NULL) {
         *h = 1;
-        return createAvl(e, dep, id_un);
+        return creerAvl(e, dep, id_un);
     } else if (e < a->element) {
-        a->pL = insertionAVL(a->pL, e, dep, id_un, h);
+        a->fg = insertionAVL(a->fg, e, dep, id_un, h);
         *h = -*h;
     } else if (e > a->element) {
-        a->pR = insertionAVL(a->pR, e, dep, id_un, h);
+        a->fd = insertionAVL(a->fd, e, dep, id_un, h);
     } else {
         *h = 0;
         return a;
@@ -181,7 +181,7 @@ Avl *insertionAVL(Avl *a, int e, char dep[50], int id_un, int *h) {
 
 void Tri_t() {
     FILE *f, *Fich;
-    f = fopen("data_t2.txt", "r");
+    f = fopen("temp/tmp.txt", "r");
     Fich = fopen("temp/testTrajets4.txt", "a");
     Avl *n = NULL;
     int hauteur = 0;
@@ -205,14 +205,14 @@ void Tri_t() {
 Avl *insertionAVL_Alphabetique(Avl *a, char dep[50], int id_etape, int id_un, int *h) {
     if (a == NULL) {
         *h = 1;
-        return createAvl(id_etape, dep, id_un);
+        return creerAvl(id_etape, dep, id_un);
     } else {
         int cmp = strcmp(dep, a->depart);
         if (cmp < 0) {
-            a->pL = insertionAVL_Alphabetique(a->pL, dep, id_etape, id_un, h);
+            a->fg = insertionAVL_Alphabetique(a->fg, dep, id_etape, id_un, h);
             *h = -*h;
         } else if (cmp > 0) {
-            a->pR = insertionAVL_Alphabetique(a->pR, dep, id_etape, id_un, h);
+            a->fd = insertionAVL_Alphabetique(a->fd, dep, id_etape, id_un, h);
         } else {
             *h = 0;
             return a;
