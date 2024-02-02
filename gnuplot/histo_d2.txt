@@ -56,7 +56,7 @@ set label 2 'Option -d2 : Distance =f(Driver)' at graph -0.05, 0.30 left rotate 
 #Création du texte "DISTANCE (Km)" selon les coordonnées suivantes:
 set label 3 'DISTANCE (Km)' at graph 1.07, 0.45 left rotate by 90
 
-#Création des barres de couleur définit en hexa (en prenant la première colone du fichier 'd1.data' pour la retranscrire sur l'axe des abscisses puis prend la deuxième colone pour créer les barres en fonctions de l'axe des ordonnées)
-plot 'data1.txt' using 2:xtic(1) notitle linecolor rgb "#33e017"
+#Création des barres de couleur définit en hexa (en prenant la première colone du fichier 'temp/result_d2.txt' pour la retranscrire sur l'axe des abscisses puis prend la deuxième colone pour créer les barres en fonctions de l'axe des ordonnées)
+plot 'temp/result_d2.txt' using 2:xtic(1) notitle linecolor rgb "#33e017"
 
 
