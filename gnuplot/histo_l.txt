@@ -1,3 +1,5 @@
+#!/bin/bash
+
 reset
 
 #Définition de la taille de l'image:
