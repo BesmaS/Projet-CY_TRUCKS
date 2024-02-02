@@ -5,6 +5,7 @@ chmod 777 l.sh
 chmod 777 t.sh
 chmod 777 s.sh
 chmod 777 data/data.csv
+sed -i 's/\r$//' ./l.sh
 
 
 echo "///////////WELCOME to CY-TRUCKS/////////////////"
