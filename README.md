@@ -1,10 +1,7 @@
 # Projet-CY_TRUCK
 
-| Nom             | Prénom   | Groupe|
-|---              |---       |---    |
-| SAIDI           | Besma    | MI2   |
-| LOISON          | Camille  | MI2   |
-| NTOOGUE         |Khephren  | MI2   |
+Programme de traitement de données
+
 
 # Installation 
 
@@ -33,6 +30,14 @@
 Compilations
 Choisir les numéros
 Ouvrir les dossiers
+
+
+
+| Nom             | Prénom   | Groupe|
+|---              |---       |---    |
+| SAIDI           | Besma    | MI2   |
+| LOISON          | Camille  | MI2   |
+| NTOOGUE         |Khephren  | MI2   |
 
 # Fonctionnement du programme
 En premier il y a la compilation, après ça il faudra choisir entre les 7 options numérotés, (d1, d2, l, t, s, help et exit respectivement), ce qui met les graphes dans des dossiers images, après io faudra juste les ouvrir
