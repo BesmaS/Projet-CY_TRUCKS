@@ -12,16 +12,16 @@ logiciels=("gnuplot" "imagemagick")
 
 for logiciel in "${logiciels[@]}"; do
     if command -v "$logiciel" &> /dev/null; then
-        echo "$logiciel est déjà installé sur votre système."
+        echo "$logiciel is already installed."
     else
-        echo "$logiciel n'est pas installé sur votre système. Installation en cours..."
+        echo "$logiciel is not installed. Download ..."
         sudo apt-get update
         sudo apt-get install "$logiciel"
         
         if [ $? -eq 0 ]; then
-            echo "$logiciel a été installé avec succès."
+            echo "$logiciel installed succesfully."
         else
-            echo "Erreur lors de l'installation de $logiciel."
+            echo "Error during installation of $logiciel."
         fi
     fi
 done
