@@ -53,9 +53,9 @@ set label 3 'DISTANCE (Km)' at graph -0.1, 0.45 left rotate by 90
 
 #Création des barres de couleur définit en hexa (en prenant la première colone du fichier 'temp/s.txt' pour la retranscrire sur l'axe des abscisses puis prend la deuxième colone pour créer les barres en fonctions de l'axe des ordonnées)
 plot "temp/s.txt" using :xtic(1) notitle, \
-	 "data1.txt" using 3:xtic(1) title 'Distances Max/Min (Km)' w filledcurve above lc rgb "#66CDAA", \
-	 "data1.txt" using 2:xtic(1) notitle w filledcurve above lc rgb "white", \
-	"data1.txt" using 4:xtic(1) title 'Distance average (Km)'linestyle 1
+	 "temp/s.txt" using 3:xtic(1) title 'Distances Max/Min (Km)' w filledcurve above lc rgb "#66CDAA", \
+	 "temp/s.txt" using 2:xtic(1) notitle w filledcurve above lc rgb "white", \
+	"temp/s.txt" using 4:xtic(1) title 'Distance average (Km)'linestyle 1
 	
 	
 
