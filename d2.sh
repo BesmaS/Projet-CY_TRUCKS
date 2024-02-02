@@ -12,4 +12,7 @@ END {
     printf "%s;%.6f\n" , driver , total_d[driver];
   }
 }' data/data.csv | LC_NUMERIC=C sort -t ";" -k2,2nr | head -n 10 > temp/result_d2.txt
-cat temp/result_d2.txt
+
+gnuplot gnuplot/histo_d2.txt
+convert H_d2.png -rotate 90 H_d2.png
+mv H_d2.png images/
