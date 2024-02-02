@@ -19,10 +19,10 @@
 
 
 # Objectif réussis
-
+    NOus avons réussis a 
 
 # Problèmes rencontrés
-
+    Nous avons eu un probleme au niveau de l'assemblage de la partie gnuplot et la partie shell car gnuplot avait du mal à se lancer sur le PC, on a eu du mal à faire les traitements t et s,
 
 # Instructions
 
