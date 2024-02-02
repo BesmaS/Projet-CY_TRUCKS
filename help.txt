@@ -1,0 +1,7 @@
+
+Help:
+    - option d1 : Sorts drivers in descending order based on the number of trips and displays a graph of the top 10 drivers.
+    - option d2 : Calculates the sum of distances for all steps associated with each driver and displays a graph of the top 10 longest distances, sorted in descending order.
+    - option l : Retrieves the total distance for each trip and creates a graph of the top 10 longest distances, sorted by ascending trip identifier number.
+    - option t : Creates a graph of the top 10 cities with the most trips, sorted in alphabetical order.
+    - option s : Generates a graph of the 50 first trips with the largest difference between the maximum and minimum distances.
