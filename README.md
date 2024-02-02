@@ -60,7 +60,7 @@ avec ./man.sh
 
 
 # Fonctionnement du programme
-En premier il y a la compilation, après ça il faudra choisir entre les 7 options numérotés, (d1, d2, l, t, s, help et exit respectivement), ce qui met les graphes dans des dossiers images, après io faudra juste les ouvrir
+En premier il y a la compilation, après ça il faudra choisir entre les 7 options numérotés, (d1, d2, l, t, s, help et exit respectivement), ce qui met les graphes dans des dossiers images, après il faudra juste les ouvrir
 
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
