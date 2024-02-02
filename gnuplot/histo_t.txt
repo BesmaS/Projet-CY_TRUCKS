@@ -33,5 +33,5 @@ set xtics offset -3, graph -0.099
 set xtics font ",8"
 set ytics font ",15"
 set key font ",12"
-plot "data1.txt" using 2:xtic(1) title "Total routes" linecolor rgb "#cf0761", \
-     "data1.txt" using 3 title "First town" linecolor rgb "#6c344d"
+plot "temp/OrdreAlphabetique.txt" using 2:xtic(1) title "Total routes" linecolor rgb "#cf0761", \
+     "temp/OrdreAlphabetique.txt" using 3 title "First town" linecolor rgb "#6c344d"
