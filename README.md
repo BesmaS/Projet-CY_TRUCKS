@@ -11,6 +11,7 @@
     Install and setup gnuplot and imagemagick with apt-get on debian distrib
 
   sudo apt-get install gnuplot
+
   sudo apt-get install imagemagick
 
    
