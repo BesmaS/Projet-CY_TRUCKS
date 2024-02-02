@@ -8,6 +8,25 @@ chmod 777 data/data.csv
 sed -i 's/\r$//' ./l.sh
 
 
+logiciels=("gnuplot" "imagemagick")
+
+for logiciel in "${logiciels[@]}"; do
+    if command -v "$logiciel" &> /dev/null; then
+        echo "$logiciel est déjà installé sur votre système."
+    else
+        echo "$logiciel n'est pas installé sur votre système. Installation en cours..."
+        sudo apt-get update
+        sudo apt-get install "$logiciel"
+        
+        if [ $? -eq 0 ]; then
+            echo "$logiciel a été installé avec succès."
+        else
+            echo "Erreur lors de l'installation de $logiciel."
+        fi
+    fi
+done
+
+
 echo "///////////WELCOME to CY-TRUCKS/////////////////"
 
 
