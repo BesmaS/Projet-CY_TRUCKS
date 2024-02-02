@@ -32,18 +32,27 @@ Programme de traitement de données
 Tout d'abord votre fichier data.csv doit être stocké dans un dossier nommé data.
 
 1- Donner les droits d'execution au fichier main.sh avec la commande 
+
 chmod 777 main.sh
 
 lancer le programme 
+
 avec ./man.sh 
 
 2- Choisir le numéros de l'option que l'on veut exectuer:
+
     - 1: option d1 : Trie les conducteurs par ordre décroissant en fonction du nombre de trajets et affiche un graphique des 10 principaux conducteurs.
+    
     - 2: option d2 : calcule la somme des distances pour toutes les étapes associées à chaque conducteur et affiche un graphique des 10 plus longues distances, triées par ordre décroissant.
+    
     - 3: option l : Récupère la distance totale pour chaque voyage et crée un graphique des 10 plus longues distances, triées par numéro d’identification de voyage ascendant.
+    
     - 4: option t : Crée un graphique des 10 principales villes avec le plus grand nombre de voyages, trié par ordre alphabétique.
+    
     - 5: option s : Génère un graphique des 50 premiers trajets avec la plus grande différence entre les distances maximale et minimale.
+    
     - 6: help
+    
     - 7: Quitter le programme
 
     
